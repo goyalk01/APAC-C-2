@@ -1,0 +1,263 @@
+@import "tailwindcss";
+
+/* ─── CUSTOM THEME VARIABLES ─── */
+:root, [data-theme="dark"] {
+  --bg: #0a0e14;
+  --bg-surface: #12171f;
+  --bg-elevated: #1a222f;
+  --bg-hover: #1f2937;
+  --bg-inset: #070a0e;
+  
+  --border: #1f2937;
+  --border-dim: #161e29;
+  --border-glow: rgba(0, 255, 159, 0.15);
+
+  --text-primary: #e6edf3;
+  --text-secondary: #8b949e;
+  --text-muted: #57606a;
+  --text-dim: #30363d;
+
+  /* Cyberpunk Neon Accents */
+  --accent-primary: #00ff9f; /* neon green */
+  --accent-primary-bg: rgba(0, 255, 159, 0.08);
+  --accent-primary-border: rgba(0, 255, 159, 0.25);
+  --accent-primary-glow: rgba(0, 255, 159, 0.4);
+
+  --accent-critical: #ff3860; /* neon pink/red */
+  --accent-critical-bg: rgba(255, 56, 96, 0.08);
+  --accent-critical-border: rgba(255, 56, 96, 0.25);
+  --accent-critical-glow: rgba(255, 56, 96, 0.5);
+
+  --accent-warning: #ffaa00; /* neon amber */
+  --accent-warning-bg: rgba(255, 170, 0, 0.08);
+  --accent-warning-border: rgba(255, 170, 0, 0.25);
+
+  --accent-info: #00b8ff; /* neon blue */
+  --accent-info-bg: rgba(0, 184, 255, 0.08);
+  --accent-info-border: rgba(0, 184, 255, 0.25);
+
+  --shadow-sm: 0 1px 3px rgba(0,0,0,0.5);
+  --shadow-md: 0 4px 12px rgba(0,0,0,0.6);
+  --shadow-lg: 0 12px 36px rgba(0,0,0,0.8);
+
+  --header-bg: #0d121a;
+  --header-border: #1f2937;
+  --nav-active-bg: rgba(0, 255, 159, 0.1);
+  --nav-active-text: #00ff9f;
+  --nav-text: #8b949e;
+  --nav-active-border: #00ff9f;
+
+  --chart-grid: rgba(255, 255, 255, 0.05);
+  --chart-text: #8b949e;
+
+  /* Map Styling */
+  --map-link: rgba(0, 184, 255, 0.25);
+  --map-link-active: rgba(0, 255, 159, 0.35);
+  --map-node-active: #00ff9f;
+  --map-node-inactive: #30363d;
+  --map-label-color: #8b949e;
+  --map-glow: rgba(0, 255, 159, 0.5);
+
+  /* Logs Console */
+  --console-bg: #070a0e;
+  --console-border: #1f2937;
+  --console-text: #00ff9f;
+  --console-text-dim: #8b949e;
+  --console-text-error: #ff3860;
+  --console-text-warn: #ffaa00;
+
+  --flash-color: rgba(255, 56, 96, 0.06);
+}
+
+[data-theme="light"] {
+  --bg: #f5f7fa;
+  --bg-surface: #ffffff;
+  --bg-elevated: #ffffff;
+  --bg-hover: #f9fafb;
+  --bg-inset: #f1f5f9;
+
+  --border: #e5e7eb;
+  --border-dim: #f3f4f6;
+  --border-glow: rgba(14, 159, 110, 0.1);
+
+  --text-primary: #111928;
+  --text-secondary: #637381;
+  --text-muted: #9ca3af;
+  --text-dim: #d1d5db;
+
+  /* Clean Professional Accents */
+  --accent-primary: #0e9f6e; /* forest green */
+  --accent-primary-bg: #def7ec;
+  --accent-primary-border: #bcf0da;
+  --accent-primary-glow: rgba(14, 159, 110, 0.15);
+
+  --accent-critical: #e02424; /* deep red */
+  --accent-critical-bg: #fde8e8;
+  --accent-critical-border: #fbd5d5;
+  --accent-critical-glow: rgba(224, 36, 36, 0.15);
+
+  --accent-warning: #b45309; /* warm amber */
+  --accent-warning-bg: #fef3c7;
+  --accent-warning-border: #fde68a;
+
+  --accent-info: #1c64f2; /* deep blue */
+  --accent-info-bg: #e1effe;
+  --accent-info-border: #c3ddfd;
+
+  --shadow-sm: 0 1px 2px rgba(0,0,0,0.05);
+  --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.08), 0 2px 4px -1px rgba(0,0,0,0.04);
+  --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.08), 0 4px 6px -2px rgba(0,0,0,0.04);
+
+  --header-bg: #ffffff;
+  --header-border: #e5e7eb;
+  --nav-active-bg: #def7ec;
+  --nav-active-text: #0e9f6e;
+  --nav-text: #637381;
+  --nav-active-border: #0e9f6e;
+
+  --chart-grid: rgba(0, 0, 0, 0.06);
+  --chart-text: #637381;
+
+  /* Map Styling */
+  --map-link: rgba(28, 100, 242, 0.2);
+  --map-link-active: rgba(14, 159, 110, 0.35);
+  --map-node-active: #0e9f6e;
+  --map-node-inactive: #d1d5db;
+  --map-label-color: #637381;
+  --map-glow: rgba(14, 159, 110, 0.25);
+
+  /* Logs Console */
+  --console-bg: #ffffff;
+  --console-border: #e5e7eb;
+  --console-text: #0e9f6e;
+  --console-text-dim: #637381;
+  --console-text-error: #e02424;
+  --console-text-warn: #b45309;
+
+  --flash-color: rgba(224, 36, 36, 0.04);
+}
+
+@theme inline {
+  --font-sans: var(--font-inter), system-ui, sans-serif;
+  --font-mono: var(--font-jetbrains-mono), monospace;
+}
+
+/* ─── BASE BODY ─── */
+body {
+  background: var(--bg);
+  color: var(--text-primary);
+  font-family: var(--font-sans);
+  transition: background-color 0.2s ease, border-color 0.2s ease;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+}
+
+/* Scrollbars */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bg-inset);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--bg-hover);
+}
+
+/* ─── GLOW & ANIMATION UTILITIES ─── */
+
+@keyframes pulseGlow {
+  0% { box-shadow: 0 0 5px var(--accent-critical-border); }
+  50% { box-shadow: 0 0 15px var(--accent-critical-glow); }
+  100% { box-shadow: 0 0 5px var(--accent-critical-border); }
+}
+
+.critical-glow {
+  animation: pulseGlow 2s infinite ease-in-out;
+  border-color: var(--accent-critical-border) !important;
+}
+
+@keyframes scanline {
+  0% { transform: translateY(-100%); }
+  100% { transform: translateY(100%); }
+}
+
+.scanline-effect {
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(255,255,255,0) 0%,
+    rgba(0, 255, 159, 0.03) 10%,
+    rgba(255,255,255,0) 20%
+  );
+  pointer-events: none;
+  animation: scanline 8s linear infinite;
+  z-index: 10;
+}
+
+[data-theme="light"] .scanline-effect {
+  background: linear-gradient(
+    to bottom,
+    rgba(255,255,255,0) 0%,
+    rgba(14, 159, 110, 0.02) 10%,
+    rgba(255,255,255,0) 20%
+  );
+}
+
+.map-grid-overlay {
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background-image: 
+    linear-gradient(to right, var(--border-dim) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--border-dim) 1px, transparent 1px);
+  background-size: 24px 24px;
+  pointer-events: none;
+  opacity: 0.5;
+}
+
+@keyframes flashAnimation {
+  0% { background-color: var(--flash-color); }
+  100% { background-color: transparent; }
+}
+
+.flash-active-overlay {
+  animation: flashAnimation 0.5s ease-out;
+}
+
+/* Sound Wave bars for TTS Indicator */
+@keyframes soundwave {
+  0%, 100% { transform: scaleY(0.3); }
+  50% { transform: scaleY(1); }
+}
+
+.tts-bar-span {
+  display: inline-block;
+  width: 2px;
+  height: 12px;
+  background: var(--accent-primary);
+  margin: 0 1px;
+  transform-origin: bottom;
+  animation: soundwave 1s infinite ease-in-out;
+}
+.tts-bar-span:nth-child(2) { animation-delay: 0.15s; }
+.tts-bar-span:nth-child(3) { animation-delay: 0.3s; }
+.tts-bar-span:nth-child(4) { animation-delay: 0.45s; }
+.tts-bar-span:nth-child(5) { animation-delay: 0.6s; }
+
+/* Custom UI cards matching original design exactly */
+.card-border {
+  border: 1px solid var(--border);
+  background: var(--bg-surface);
+  box-shadow: var(--shadow-sm);
+  border-radius: 4px;
+  transition: all 0.2s ease;
+}
+.card-border:hover {
+  border-color: var(--bg-hover);
+}

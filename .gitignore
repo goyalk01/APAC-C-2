@@ -2,6 +2,10 @@ __pycache__/
 *.pyc
 .pytest_cache/
 .pytest_cache
-swarm_box/swarm_cache.db
 .idea/
 .vscode/
+
+# Decoupled backend runtime files
+apps/api/swarm_cache.db
+apps/api/node_keys.json
+apps/api/.env

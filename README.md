@@ -1,57 +1,48 @@
 # SwarmGuard AI
 
-Offline-first edge intelligence for disaster response. Edge nodes run local threat inference, sign payloads cryptographically, and propagate alerts through a relay network to a Swarm Box — a zero-dependency command dashboard with voice broadcast.
+Offline-first edge intelligence for disaster response. Edge nodes run local threat inference, sign payloads cryptographically, and propagate alerts through a relay network to a Swarm Box — a decoupled zero-dependency command dashboard with voice broadcast.
 
 ## What's Built and Working
 
-- **Edge Node Simulator** — 5 simulated nodes generating signed threat JSON with Ed25519 cryptographic signatures
+- **Edge Node Simulator** — 5 simulated nodes generating signed threat JSON with Ed25519 cryptographic signatures (located in the project root)
 - **Cryptographic Verification** — End-to-end: nodes sign payloads, Swarm Box verifies signatures against a pre-shared key registry before caching
 - **Relay Network** — WebSocket-based relay hub broadcasting alerts to all connected Swarm Boxes
-- **Swarm Box Dashboard** — Real-time web interface with alert feed, analytics chart, evidence viewer, and TTS voice broadcast
+- **Decoupled Swarm Box Dashboard** — Real-time Next.js 15 frontend in `apps/web` with alert feed, analytics chart, evidence viewer, and TTS voice broadcast
+- **Decoupled Swarm Box API** — Pure FastAPI JSON API backend in `apps/api` (SQLite data persistence)
 - **Fully Offline** — All assets (fonts, scripts, images) bundled locally. No CDN or API dependencies during blackout operation
-
-## What's Architected (Not Built)
-
-- Cloud sync to BigQuery when connectivity restores
-- ADK conversational agent for natural language Q&A
-- AlloyDB + RAG pipeline for emergency protocol retrieval
-- Looker dashboard for command-level analytics
 
 ## Quick Start
 
 ```bash
-# 1. Install dependencies
-pip install -r requirements.txt
+# 1. Install Python backend dependencies
+pip install -r apps/api/requirements.txt
 
-# 2. Generate the key registry (required for signature verification)
-cd swarmguard-ai
-python -m swarm_box.generate_keys
+# 2. Install Next.js frontend dependencies
+cd apps/web
+npm install
+cd ../..
 
-# 3. Start the relay hub
-python mesh_network/mesh_relay.py
-
-# 4. Start the Swarm Box dashboard (in another terminal)
-uvicorn swarm_box.app:app --reload --port 8000
-
-# 5. Launch edge nodes (in another terminal)
-python edge_nodes/node_1.py
-# (repeat for node_2.py through node_5.py, or run run_local.bat)
+# 3. Launch everything end-to-end
+python run_decoupled_demo.py
 ```
 
-## Architecture
+This dev launcher scripts will generate matching keys, start the mesh relay, spin up the API backend, start the frontend dev server, and stagger-run the edge node simulations.
+
+## Decoupled Architecture
 
 ```
-Edge Nodes (5x)          Relay Hub             Swarm Box
-┌─────────────┐     ┌────────────────┐     ┌──────────────────┐
-│ Local Infer  │     │  WebSocket     │     │ FastAPI + SQLite  │
-│ Sign (Ed25519)│────▶│  Broadcast    │────▶│ Verify Signature  │
-│ Transmit JSON│     │  Hub          │     │ Cache + Display   │
-└─────────────┘     └────────────────┘     │ TTS Voice Alert   │
-                                            └──────────────────┘
+Edge Nodes (5x)          Relay Hub             API Backend (apps/api)      Frontend UI (apps/web)
+┌─────────────┐     ┌────────────────┐     ┌─────────────────────┐     ┌──────────────────────┐
+│ Local Infer  │     │  WebSocket     │     │ FastAPI + SQLite    │     │ Next.js 15 Dashboard │
+│ Sign (Ed25519)│────▶│  Broadcast    │────▶│ verify signature    │◀────│ Read alerts (REST)   │
+│ Transmit JSON│     │  Hub          │     │ cache → WS broadcast│     │ WS live alerts stream│
+└─────────────┘     └────────────────┘     └─────────────────────┘     └──────────────────────┘
 ```
 
 ## Tests
 
 ```bash
-python -m pytest tests/ -v  # 9 tests — crypto, edge node, key registry, cache, TTS
+# Run backend tests
+pytest apps/api/tests/ -v
 ```
+
