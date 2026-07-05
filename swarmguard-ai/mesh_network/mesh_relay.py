@@ -5,6 +5,17 @@ import websockets
 clients = set()
 
 async def relay_handler(websocket):
+    import os
+    import urllib.parse
+    token = os.environ.get("RELAY_AUTH_TOKEN")
+    if token:
+        parsed = urllib.parse.urlparse(websocket.path)
+        params = urllib.parse.parse_qs(parsed.query)
+        path_token = params.get("token", [None])[0]
+        if path_token != token:
+            await websocket.close(code=4001, reason="Unauthorized: Missing or invalid token")
+            return
+
     clients.add(websocket)
     try:
         async for message in websocket:
