@@ -12,9 +12,13 @@ from fastapi.responses import HTMLResponse, JSONResponse
 
 from .local_cache import init_db, insert_threat, get_all_threats
 from .tts_engine import threat_to_speech
+from .key_registry import load_registry_from_file, verify_payload, is_registered
 
 logging.basicConfig(level=logging.INFO, format="[SwarmBox] %(message)s")
 log = logging.getLogger(__name__)
+
+# ---- Key registry path ----
+KEYS_FILE = Path(__file__).parent / "node_keys.json"
 
 # ---- WebSocket clients (browser dashboards) ----
 dashboard_clients: set[WebSocket] = set()
@@ -27,8 +31,26 @@ async def mesh_listener():
             async with websockets.connect("ws://localhost:8765") as ws:
                 log.info("Connected to mesh relay ws://localhost:8765")
                 async for raw in ws:
-                    payload = json.loads(raw)
-                    log.info(f"Received alert: {payload['alert_type']} from {payload['node_id']}")
+                    # --- Crash guard: malformed JSON ---
+                    try:
+                        payload = json.loads(raw)
+                    except (json.JSONDecodeError, ValueError) as e:
+                        log.warning(f"Malformed JSON from mesh (dropped): {str(raw)[:200]} — {e}")
+                        continue
+
+                    # --- Crash guard: missing required fields ---
+                    required = ("node_id", "alert_type", "confidence", "gps", "timestamp", "signature")
+                    missing = [f for f in required if f not in payload]
+                    if missing:
+                        log.warning(f"Payload missing fields {missing}, dropped: {str(raw)[:200]}")
+                        continue
+
+                    # --- Signature verification ---
+                    if not verify_payload(payload):
+                        log.warning(f"REJECTED: signature verification failed for {payload.get('node_id', '?')}")
+                        continue
+
+                    log.info(f"VERIFIED alert: {payload['alert_type']} from {payload['node_id']}")
 
                     # Cache to SQLite
                     event_id = insert_threat(payload)
@@ -59,6 +81,11 @@ async def mesh_listener():
 async def lifespan(app: FastAPI):
     init_db()
     log.info("SQLite cache initialized")
+    # Load key registry
+    if KEYS_FILE.exists():
+        load_registry_from_file(str(KEYS_FILE))
+    else:
+        log.warning(f"Key registry not found at {KEYS_FILE} — run generate_keys.py first! All payloads will be REJECTED.")
     task = asyncio.create_task(mesh_listener())
     yield
     task.cancel()

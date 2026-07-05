@@ -4,7 +4,7 @@ Edge Model Framework,Vertex AI Edge (Model Registry + Optimization),"Train, opti
 Mesh Protocol (Simulated),WebSocket + Python asyncio,Simulated peer-to-peer mesh relay for demo purposes
 Mesh Protocol (Production),Bluetooth Mesh / LoRa / SDR,Real offline mesh networking (out of scope for prototype)
 Swarm Box Backend,Python FastAPI + WebSockets,"Ingest mesh JSON, generate TTS, cache data"
-TTS Engine,Browser Web Speech API + Gemini Flash,Convert threat JSON to natural language audio alerts
+TTS Engine,Browser Web Speech API (offline-capable),Convert threat JSON to natural language audio alerts via template-based NLG
 Cloud Sync API,Python FastAPI on Cloud Run,REST API ingesting cached swarm data when connectivity restores
 Data Warehouse,Google BigQuery,Store all threat events for analytics and pattern detection
 Predictive ML,Vertex AI AutoML / Custom Training,Train predictive models on historical swarm data

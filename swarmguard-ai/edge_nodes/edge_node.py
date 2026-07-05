@@ -9,6 +9,10 @@ class EdgeNode:
         self.node_id = node_id
         self.model_version = model_version
         self.signer = CryptoSigner()
+
+    def get_public_key_b64(self) -> str:
+        """Export this node's public key for the Swarm Box key registry."""
+        return self.signer.get_public_key_b64()
         
     def cache_visual_proof(self, image_data: bytes) -> str:
         # ponytail: skipped actual disk writing for this mock, just return hash

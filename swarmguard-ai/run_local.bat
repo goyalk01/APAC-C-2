@@ -6,8 +6,8 @@ echo.
 echo Starting Mesh Relay (ws://localhost:8765)...
 start "Mesh Relay" cmd /c "python -m mesh_network.mesh_relay"
 
-echo Starting Swarm Box API (http://localhost:8000)...
-start "Swarm Box Server" cmd /c "uvicorn swarm_box.app:app --host localhost --port 8000"
+echo Starting Swarm Box API (http://localhost:8010)...
+start "Swarm Box Server" cmd /c "uvicorn swarm_box.app:app --host localhost --port 8010"
 
 echo Waiting 3 seconds for servers to initialize...
 timeout /t 3 /nobreak >nul
@@ -27,6 +27,6 @@ echo.
 echo =======================================================
 echo All services launched!
 echo Opening Swarm Box Dashboard...
-start http://localhost:8000
+start http://localhost:8010
 echo =======================================================
 pause
