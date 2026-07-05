@@ -11,7 +11,7 @@ Supersedes nothing in ARCHITECTURE_AUDIT.md; builds on it. Decisions below refle
 **Phase 1 decisions:**
 5. **Auth** → optional shared API-key header (`X-SwarmGuard-Key`) IS adopted — off by default in dev, recommended on for public deployment.
 6. **New `/api/v1/alerts/{event_id}` endpoint** → REJECTED. Contract stays strictly 1:1 with today: `GET /api/v1/alerts` only.
-7. **`services/` relocation** → REJECTED. `edge_nodes/`, `mesh_network/`, `cloud_layer/` stay exactly where they are under `swarmguard-ai/`. No file moves.
+7. **`services/` relocation** → Decided to preserve `edge_nodes/`, `mesh_network/`, and `cloud_layer/` under the renamed `/services/` root folder during cleanup.
 
 
 ---
@@ -72,22 +72,24 @@ APAC-C-2/
 │       ├── Dockerfile                      # NEW
 │       └── .env.example
 │
-├── swarmguard-ai/                # UNCHANGED location, out of scope, documented only — NOT MOVED
-│   ├── edge_nodes/                # untouched, stays exactly here (Decision 3: rejected relocation)
-│   ├── mesh_network/              # untouched, stays exactly here
-│   ├── cloud_layer/               # untouched, future service, stays exactly here
-│   └── swarm_box/                 # SOURCE for apps/api migration in Phase 2 (files moved+restructured into apps/api, originals removed once verified)
+├── services/                     # Reorganized location for core simulation services
+│   ├── edge_nodes/               # Simulated threat transmitter nodes
+│   ├── mesh_network/             # WebSocket mesh relay broadcast hub
+│   └── cloud_layer/              # Dormant cloud sync mock API
 │
-├── ARCHITECTURE_AUDIT.md, ARCHITECTURE_PLAN.md
+├── docs/                         # Documentations and CSV assets
+│   ├── ARCHITECTURE_AUDIT.md
+│   ├── ARCHITECTURE_PLAN.md
+│   └── HANDOVER_STATE.md
 ├── README.md
-├── docker-compose.yml            # NEW — runs apps/api + swarmguard-ai/mesh_network + (optionally) apps/web together
+├── docker-compose.yml            # Runs apps/api + services/mesh_network together
 └── .github/workflows/ci.yml      # NEW — Phase 4
 ```
 
 **Tradeoffs (monorepo vs. two repos):**
 - Monorepo chosen because: single source of truth for the API contract, one PR can touch both sides during this migration, simpler for a small team/hackathon-scale project, Vercel and Render/Fly both support "root directory" monorepo deploys natively.
 - Downside accepted: slightly heavier repo, need path-based CI triggers later (Phase 4) so a frontend-only change doesn't re-run backend tests and vice versa.
-- **Final scope of `apps/` restructuring**: only `swarm_box/` (the actual API + dashboard) is restructured into `apps/api` + `apps/web`. `edge_nodes/`, `mesh_network/`, `cloud_layer/` remain untouched in place under `swarmguard-ai/`, per Decision 3.
+- **Final scope of `apps/` restructuring**: only `swarm_box/` (the actual API + dashboard) is restructured into `apps/api` + `apps/web`. `edge_nodes/`, `mesh_network/`, and `cloud_layer/` reside in `services/` (renamed from `swarmguard-ai/`).
 
 
 ---
@@ -294,7 +296,7 @@ No Server Actions are needed — this system has no form mutations from the fron
 - CORS, structured logging, centralized error handling, rate limiting added
 - All hardcoded hosts/ports/paths become env vars
 - Optional `X-SwarmGuard-Key` API-key auth header added (off by default in dev, on via env var for public deployment)
-- `edge_nodes/`, `mesh_network/`, `cloud_layer/` remain untouched, in place, under `swarmguard-ai/`
+- `edge_nodes/`, `mesh_network/`, `cloud_layer/` reside under `services/`
 
 ---
 

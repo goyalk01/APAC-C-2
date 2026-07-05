@@ -16,8 +16,8 @@ import subprocess
 from pathlib import Path
 
 # Setup paths
-PROJECT_ROOT = Path(__file__).resolve().parent
-sys.path.insert(0, str(PROJECT_ROOT / "swarmguard-ai"))
+PROJECT_ROOT = Path(__file__).resolve().parent.parent
+sys.path.insert(0, str(PROJECT_ROOT / "services"))
 sys.path.insert(0, str(PROJECT_ROOT / "apps" / "api"))
 
 # Set environment variables for the decoupled backend

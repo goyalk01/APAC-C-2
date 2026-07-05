@@ -8,7 +8,7 @@ from pathlib import Path
 import pytest
 
 REPO_ROOT = Path(__file__).resolve().parents[3]
-SWARMGUARD_AI_DIR = REPO_ROOT / "swarmguard-ai"
+SWARMGUARD_AI_DIR = REPO_ROOT / "services"
 
 sys.path.insert(0, str(SWARMGUARD_AI_DIR))
 

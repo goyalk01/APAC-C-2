@@ -10,8 +10,8 @@
 APAC-C-2/
 ├── README.md, HANDOVER_STATE.md          [docs — ground truth status]
 ├── swarmguard_phase_plan.csv, swarmguard_trd_techstack.csv   [planning artifacts]
-└── swarmguard-ai/
-    ├── run_demo.py, run_local.bat        [orchestration — dev-only local launcher]
+└── services/
+    ├── run_demo.py, run_local.bat        [orchestration — dev-only local launcher, now legacy]
     ├── requirements.txt                  [fastapi, uvicorn, websockets, cryptography, pytest]
     │
     ├── edge_nodes/                       [BACKEND — simulated IoT/edge tier]
@@ -169,7 +169,7 @@ User clicks #syncNowBtn (app.js:472)
 
 ## 6. Environment Variables / Secrets Inventory
 
-**Current state: there are effectively none.** A full search confirms no `.env`, `os.environ`, or `os.getenv` usage anywhere in `swarmguard-ai/`. All configuration is hardcoded literals:
+**Current state: there are effectively none.** A full search confirms no `.env`, `os.environ`, or `os.getenv` usage anywhere in `services/`. All configuration is hardcoded literals:
 
 | Value | Hardcoded location(s) | Should become |
 |---|---|---|

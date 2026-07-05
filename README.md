@@ -8,9 +8,9 @@ Offline-first edge intelligence for disaster response. Edge nodes run local thre
 
 - `apps/api/` — Decoupled FastAPI JSON/WebSocket backend.
 - `apps/web/` — Decoupled Next.js 15 + TypeScript + Tailwind CSS dashboard app.
-- `swarmguard-ai/edge_nodes/` — Simulated IoT edge node tier (Ed25519 signing).
-- `swarmguard-ai/mesh_network/` — Simulated WebSocket mesh relay hub.
-- `swarmguard-ai/cloud_layer/` — Dormant schematics for cloud-sync capability.
+- `services/edge_nodes/` — Simulated IoT edge node tier (Ed25519 signing).
+- `services/mesh_network/` — Simulated WebSocket mesh relay hub.
+- `services/cloud_layer/` — Dormant schematics for cloud-sync capability.
 
 ---
 
@@ -33,7 +33,7 @@ cd ../..
 ### 3. Run Everything Together
 To launch the full pipeline (Mesh Relay + API Backend + Frontend + Staggered Simulation Nodes) with a single command:
 ```bash
-python run_decoupled_demo.py
+python scripts/run_decoupled_demo.py
 ```
 Visit:
 - **Frontend Dashboard:** [http://localhost:3000](http://localhost:3000)

@@ -15,10 +15,10 @@ import json
 import sys
 from pathlib import Path
 
-# swarmguard-ai/edge_nodes stays in place (Decision 3) — add it to sys.path
+# services/edge_nodes stays in place — add it to sys.path
 # so it stays importable without moving/duplicating any of its code.
 REPO_ROOT = Path(__file__).resolve().parents[3]
-SWARMGUARD_AI_DIR = REPO_ROOT / "swarmguard-ai"
+SWARMGUARD_AI_DIR = REPO_ROOT / "services"
 sys.path.insert(0, str(SWARMGUARD_AI_DIR))
 
 from edge_nodes import get_all_node_keys  # noqa: E402
