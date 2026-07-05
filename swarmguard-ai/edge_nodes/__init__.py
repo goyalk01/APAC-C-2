@@ -49,10 +49,12 @@ async def run_node_scenario(node_id: str):
         visual_proof_hash=proof_hash
     )
 
+    import os
+    relay_url = os.environ.get("MESH_RELAY_URL", "ws://localhost:8765")
     try:
-        async with websockets.connect("ws://localhost:8765") as websocket:
+        async with websockets.connect(relay_url) as websocket:
             await websocket.send(json.dumps(payload))
-            print(f"[{node_id}] Transmitted payload successfully.")
+            print(f"[{node_id}] Transmitted payload successfully to {relay_url}.")
             # Keep connection alive momentarily to ensure flush
             await asyncio.sleep(1)
     except Exception as e:

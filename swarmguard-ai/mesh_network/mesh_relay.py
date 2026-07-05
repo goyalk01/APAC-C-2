@@ -22,8 +22,11 @@ async def relay_handler(websocket):
         clients.remove(websocket)
 
 async def main():
-    async with websockets.serve(relay_handler, "localhost", 8765):
-        print("Mesh relay active on ws://localhost:8765")
+    import os
+    host = os.environ.get("RELAY_HOST", "0.0.0.0")
+    port = int(os.environ.get("RELAY_PORT", "8765"))
+    async with websockets.serve(relay_handler, host, port):
+        print(f"Mesh relay active on ws://{host}:{port}")
         await asyncio.Future()  # run forever
 
 if __name__ == "__main__":
