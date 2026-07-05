@@ -45,7 +45,9 @@ export const AlertFeed: React.FC = () => {
               }`}
               style={{
                 backgroundColor: isSelected ? 'var(--bg-hover)' : 'var(--bg-surface)',
-                borderColor: isSelected ? 'var(--accent-primary)' : 'var(--border)',
+                borderTopColor: isSelected ? 'var(--accent-primary)' : 'var(--border)',
+                borderRightColor: isSelected ? 'var(--accent-primary)' : 'var(--border)',
+                borderBottomColor: isSelected ? 'var(--accent-primary)' : 'var(--border)',
                 borderLeftColor: accentColor,
               }}
             >
