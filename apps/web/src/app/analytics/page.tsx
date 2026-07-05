@@ -13,7 +13,7 @@ export default function AnalyticsPage() {
       {/* LEFT COLUMN: Metric Graph Analysis (60% equivalent) */}
       <div className="lg:col-span-3 flex flex-col">
         <section 
-          className="flex-1 flex flex-col rounded border shadow-sm overflow-hidden"
+          className="flex-1 flex flex-col rounded-lg border shadow-sm overflow-hidden"
           style={{
             backgroundColor: 'var(--bg-surface)',
             borderColor: 'var(--border)',
@@ -21,14 +21,14 @@ export default function AnalyticsPage() {
           }}
         >
           <div 
-            className="px-4 py-3 border-b font-mono text-xs font-bold"
+            className="px-4 py-3 border-b font-sans text-xs font-bold"
             style={{ borderColor: 'var(--border-dim)' }}
           >
             <h2 style={{ color: 'var(--text-primary)' }}>METRIC GRAPH ANALYSIS</h2>
           </div>
           <div className="p-6 bg-[var(--bg-surface)] flex-1 flex items-center justify-center min-h-[300px]">
             {alerts.length === 0 ? (
-              <div className="text-center font-mono text-xs text-neutral-500">
+              <div className="text-center font-sans text-xs" style={{ color: 'var(--text-muted)' }}>
                 Awaiting telemetry metrics to compile analysis
               </div>
             ) : (
@@ -41,16 +41,14 @@ export default function AnalyticsPage() {
       {/* RIGHT COLUMN: Console Logs (40% equivalent) */}
       <div className="lg:col-span-2 flex flex-col">
         <section 
-          className="flex-1 flex flex-col rounded border shadow-sm overflow-hidden"
+          className="flex-1 flex flex-col rounded-lg border shadow-sm overflow-hidden"
           style={{
             backgroundColor: 'var(--bg-surface)',
             borderColor: 'var(--border)',
             boxShadow: 'var(--shadow-sm)',
           }}
         >
-          <div className="p-4 bg-[var(--bg-surface)] flex-1">
-            <ConsoleLogs />
-          </div>
+          <ConsoleLogs />
         </section>
       </div>
     </div>

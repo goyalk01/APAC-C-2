@@ -38,16 +38,16 @@ export const Header: React.FC = () => {
     >
       {/* Branding Logo */}
       <div className="flex items-center gap-3">
-        <svg className="w-6 h-6 animate-pulse" viewBox="0 0 32 32" fill="none" style={{ color: 'var(--accent-primary)' }}>
+        <svg className="w-6 h-6" viewBox="0 0 32 32" fill="none" style={{ color: 'var(--accent-primary)' }}>
           <path d="M16 2L28 9V23L16 30L4 23V9L16 2Z" stroke="currentColor" strokeWidth="2" />
           <path d="M16 8L22 11.5V18.5L16 22L10 18.5V11.5L16 8Z" fill="currentColor" className="opacity-30" />
           <circle cx="16" cy="15" r="3.5" fill="currentColor" />
         </svg>
         <div className="flex flex-col">
-          <span className="text-sm font-bold tracking-wider font-mono">
+          <span className="text-sm font-bold tracking-wider font-sans">
             SWARMGUARD <span style={{ color: 'var(--accent-primary)' }}>AI</span>
           </span>
-          <span className="text-[9px] tracking-widest text-neutral-500 font-mono">
+          <span className="text-[9px] tracking-widest text-neutral-500 font-sans uppercase">
             DECISION INTELLIGENCE SYSTEM
           </span>
         </div>
@@ -61,7 +61,7 @@ export const Header: React.FC = () => {
             <Link
               key={item.path}
               href={item.path}
-              className="text-xs font-mono font-medium py-1.5 px-4 rounded border border-transparent transition-all"
+              className="text-xs font-sans font-semibold py-1.5 px-4 rounded-md border border-transparent transition-all hover:bg-[var(--bg-hover)]"
               style={{
                 backgroundColor: isActive ? 'var(--nav-active-bg)' : 'transparent',
                 color: isActive ? 'var(--nav-active-text)' : 'var(--text-secondary)',
@@ -78,7 +78,7 @@ export const Header: React.FC = () => {
       <div className="flex items-center gap-4">
         {/* Mode Indicator */}
         <div 
-          className="flex items-center gap-2 px-3 py-1 text-[9px] font-bold rounded border font-mono animate-pulse"
+          className={`flex items-center gap-2 px-3 py-1 text-[9px] font-bold rounded-md border font-mono ${!wsConnected ? 'animate-pulse' : ''}`}
           style={{
             borderColor: wsConnected ? 'var(--accent-primary-border)' : 'var(--accent-critical-border)',
             backgroundColor: wsConnected ? 'var(--accent-primary-bg)' : 'var(--accent-critical-bg)',
@@ -97,7 +97,7 @@ export const Header: React.FC = () => {
         {/* Theme Toggle */}
         <button
           onClick={toggleTheme}
-          className="p-1.5 rounded border hover:bg-neutral-800 transition-colors cursor-pointer"
+          className="p-1.5 rounded-md border hover:bg-[var(--bg-hover)] transition-colors cursor-pointer"
           style={{
             borderColor: 'var(--border)',
             color: 'var(--text-secondary)',

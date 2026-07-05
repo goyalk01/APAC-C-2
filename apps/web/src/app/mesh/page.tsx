@@ -10,7 +10,7 @@ export default function MeshPage() {
       {/* LEFT COLUMN: Large Tactical Map (60% equivalent) */}
       <div className="lg:col-span-3 flex flex-col">
         <section 
-          className="flex-1 flex flex-col rounded border shadow-sm overflow-hidden"
+          className="flex-1 flex flex-col rounded-lg border shadow-sm overflow-hidden"
           style={{
             backgroundColor: 'var(--bg-surface)',
             borderColor: 'var(--border)',
@@ -18,12 +18,12 @@ export default function MeshPage() {
           }}
         >
           <div 
-            className="flex items-center justify-between px-4 py-3 border-b font-mono text-xs font-bold"
+            className="flex items-center justify-between px-4 py-3 border-b font-sans text-xs font-bold"
             style={{ borderColor: 'var(--border-dim)' }}
           >
             <h2 style={{ color: 'var(--text-primary)' }}>FORCE-DIRECTED MESH NETWORK GRAPH</h2>
             <span 
-              className="px-1.5 py-0.5 rounded text-[8px] font-bold text-white bg-green-600 animate-pulse"
+              className="px-1.5 py-0.5 rounded-md text-[8px] font-bold text-white bg-green-600 font-sans"
               style={{ textShadow: '0 0 4px rgba(0,255,0,0.5)' }}
             >
               GRID ACTIVE
@@ -38,7 +38,7 @@ export default function MeshPage() {
       {/* RIGHT COLUMN: Node Telemetry Panel (40% equivalent) */}
       <div className="lg:col-span-2 flex flex-col">
         <section 
-          className="flex-1 flex flex-col rounded border shadow-sm overflow-hidden"
+          className="flex-1 flex flex-col rounded-lg border shadow-sm overflow-hidden"
           style={{
             backgroundColor: 'var(--bg-surface)',
             borderColor: 'var(--border)',
@@ -46,7 +46,7 @@ export default function MeshPage() {
           }}
         >
           <div 
-            className="px-4 py-3 border-b font-mono text-xs font-bold"
+            className="px-4 py-3 border-b font-sans text-xs font-bold"
             style={{ borderColor: 'var(--border-dim)' }}
           >
             <h2 style={{ color: 'var(--text-primary)' }}>EDGE NODE TELEMETRY</h2>

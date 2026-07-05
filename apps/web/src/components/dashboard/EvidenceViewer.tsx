@@ -2,7 +2,7 @@
 
 import React, { useEffect, useRef } from 'react';
 import { useAlerts } from '../../context/AlertsContext';
-import { ALERT_CONFIG } from './AlertFeed';
+import { getAlertSeverity, SEVERITY_CONFIG, getAlertLabel } from '../../lib/severity';
 
 export const EvidenceViewer: React.FC = () => {
   const { selectedAlert, theme, addLogLine } = useAlerts();
@@ -33,8 +33,8 @@ export const EvidenceViewer: React.FC = () => {
     ctx.fillStyle = isDark ? '#070a0e' : '#f9fafb';
     ctx.fillRect(0, 0, w, h);
 
-    // Radar/grid lines background
-    ctx.strokeStyle = isDark ? 'rgba(0, 255, 159, 0.02)' : 'rgba(0,0,0,0.03)';
+    // Toned down grid lines background
+    ctx.strokeStyle = isDark ? 'rgba(0, 255, 159, 0.005)' : 'rgba(0,0,0,0.01)';
     ctx.lineWidth = 0.5 * scale;
     for (let x = 0; x <= w; x += 24 * scale) {
       ctx.beginPath();
@@ -49,12 +49,16 @@ export const EvidenceViewer: React.FC = () => {
       ctx.stroke();
     }
 
-    // Draw military corner brackets
+    const severity = getAlertSeverity(p.alert_type, p.confidence);
+    const themeConfig = SEVERITY_CONFIG[severity];
+    const accentColor = isDark ? themeConfig.color : themeConfig.lightColor;
+
+    // Draw thin military corner brackets (toned down)
     const bLen = 20 * scale;
     const bOff = 12 * scale;
-    ctx.strokeStyle = isDark ? '#ff3860' : '#e02424';
-    ctx.lineWidth = 2 * scale;
-    ctx.globalAlpha = 0.6;
+    ctx.strokeStyle = accentColor;
+    ctx.lineWidth = 1 * scale;
+    ctx.globalAlpha = 0.35;
 
     // Top-Left
     ctx.beginPath();
@@ -86,9 +90,6 @@ export const EvidenceViewer: React.FC = () => {
 
     ctx.globalAlpha = 1.0;
 
-    const style = ALERT_CONFIG[p.alert_type] || { color: '#ff3860', label: p.alert_type, lightColor: '#e02424' };
-    const accentColor = isDark ? style.color : style.lightColor;
-
     ctx.textAlign = 'center';
 
     // Section header
@@ -96,10 +97,10 @@ export const EvidenceViewer: React.FC = () => {
     ctx.font = `bold ${10 * scale}px var(--font-mono)`;
     ctx.fillText('SECURE IMAGE PROOF CACHE', w / 2, 38 * scale);
 
-    // Large alert text label
+    // Large alert text label (font-sans style for labels)
     ctx.fillStyle = isDark ? '#e6edf3' : '#111928';
-    ctx.font = `bold ${18 * scale}px var(--font-mono)`;
-    ctx.fillText(style.label.toUpperCase(), w / 2, 65 * scale);
+    ctx.font = `bold ${18 * scale}px var(--font-sans)`;
+    ctx.fillText(getAlertLabel(p.alert_type).toUpperCase(), w / 2, 65 * scale);
 
     // Status / trust metadata subtext
     ctx.fillStyle = isDark ? '#8b949e' : '#637381';
@@ -145,19 +146,22 @@ export const EvidenceViewer: React.FC = () => {
 
   if (!selectedAlert) {
     return (
-      <div className="flex flex-col items-center justify-center text-center p-8 border border-dashed rounded bg-[var(--bg-inset)] border-[var(--border)] h-full min-h-[220px]">
+      <div 
+        className="flex flex-col items-center justify-center text-center p-8 border border-dashed rounded-lg bg-[var(--bg-inset)] h-full min-h-[220px]"
+        style={{ borderColor: 'var(--border)' }}
+      >
         <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="opacity-30 mb-2">
           <path d="M15 10l-4 4-2-2-4 4h14V10z" />
           <circle cx="8.5" cy="8.5" r="1.5" />
           <rect x="3" y="3" width="18" height="18" rx="2" />
         </svg>
-        <p className="text-xs font-mono text-neutral-500">Select threat event to verify local cached visual proof</p>
+        <p className="text-xs font-sans" style={{ color: 'var(--text-secondary)' }}>Select threat event to verify local cached visual proof</p>
       </div>
     );
   }
 
   return (
-    <div className="relative w-full h-full min-h-[220px] rounded overflow-hidden">
+    <div className="relative w-full h-full min-h-[220px] rounded-lg overflow-hidden">
       <canvas ref={canvasRef} className="block w-full h-full" />
     </div>
   );

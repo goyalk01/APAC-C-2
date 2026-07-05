@@ -2,6 +2,7 @@
 
 import React, { useEffect, useRef } from 'react';
 import { useAlerts } from '../../context/AlertsContext';
+import { getAlertSeverity, SEVERITY_CONFIG } from '../../lib/severity';
 
 interface TacticalMapProps {
   large?: boolean;
@@ -20,7 +21,7 @@ const SWARM_BOX_POS = { x: 0.82, y: 0.52, label: 'SWARM BOX' };
 export const TacticalMap: React.FC<TacticalMapProps> = ({ large = false }) => {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const animationFrameRef = useRef<number | null>(null);
-  const { nodesReported, theme } = useAlerts();
+  const { nodesReported, theme, alerts } = useAlerts();
   const frameRef = useRef(0);
 
   // Resize function to keep canvas pixels crisp
@@ -65,7 +66,7 @@ export const TacticalMap: React.FC<TacticalMapProps> = ({ large = false }) => {
       );
 
       // 1. Render glowing mesh link lines
-      ctx.strokeStyle = isDark ? 'rgba(0, 184, 255, 0.25)' : 'rgba(28, 100, 242, 0.2)';
+      ctx.strokeStyle = isDark ? 'rgba(0, 184, 255, 0.15)' : 'rgba(28, 100, 242, 0.08)';
       ctx.lineWidth = 1 * scale;
       ctx.setLineDash([4 * scale, 4 * scale]);
       for (let i = 0; i < activeNodes.length; i++) {
@@ -80,8 +81,8 @@ export const TacticalMap: React.FC<TacticalMapProps> = ({ large = false }) => {
       }
 
       // 2. Draw active relay lines to Swarm Box with flowing packet dots
-      ctx.strokeStyle = isDark ? 'rgba(0, 255, 159, 0.35)' : 'rgba(14, 159, 110, 0.35)';
-      ctx.lineWidth = 1.5 * scale;
+      ctx.strokeStyle = isDark ? 'rgba(0, 255, 159, 0.2)' : 'rgba(14, 159, 110, 0.15)';
+      ctx.lineWidth = 1 * scale;
       ctx.setLineDash([]);
       activeNodes.forEach((id) => {
         const n = MAP_NODES[id];
@@ -95,29 +96,29 @@ export const TacticalMap: React.FC<TacticalMapProps> = ({ large = false }) => {
         ctx.lineTo(sbx, sby);
         ctx.stroke();
 
-        // Flowing neon packet dots
-        const flowT = (frameRef.current * 0.01) % 1.0;
+        // Flowing neon packet dots (smaller and smoother)
+        const flowT = (frameRef.current * 0.008) % 1.0;
         const packetX = nx + (sbx - nx) * flowT;
         const packetY = ny + (sby - ny) * flowT;
 
         ctx.beginPath();
-        ctx.arc(packetX, packetY, 2.5 * scale, 0, Math.PI * 2);
+        ctx.arc(packetX, packetY, 1.2 * scale, 0, Math.PI * 2);
         ctx.fillStyle = isDark ? '#00ff9f' : '#0e9f6e';
         ctx.fill();
       });
 
-      // 3. Draw radar rotating sweeps on dark theme
+      // 3. Draw radar rotating sweeps on dark theme (toned down)
       if (isDark) {
         const sbx = px(SWARM_BOX_POS);
         const sby = py(SWARM_BOX_POS);
         const sweepR = large ? 180 * scale : 120 * scale;
-        const angle = (frameRef.current * 0.015) % (Math.PI * 2);
+        const angle = (frameRef.current * 0.003) % (Math.PI * 2); // Slower sweep
 
         ctx.beginPath();
         ctx.moveTo(sbx, sby);
         ctx.arc(sbx, sby, sweepR, angle, angle + 0.15);
         ctx.closePath();
-        ctx.fillStyle = 'rgba(0, 255, 159, 0.02)';
+        ctx.fillStyle = 'rgba(0, 255, 159, 0.005)'; // Very faint sweep
         ctx.fill();
       }
 
@@ -127,6 +128,20 @@ export const TacticalMap: React.FC<TacticalMapProps> = ({ large = false }) => {
         const y = py(pos);
         const on = nodesReported.includes(id);
 
+        // Find active threat alert on this node to color it dynamically
+        const activeAlert = alerts.find((a) => a.payload.node_id === id);
+        let nodeColor = isDark ? '#00ff9f' : '#0e9f6e';
+        let pulseColorBg = isDark ? 'rgba(0, 255, 159, 0.01)' : 'rgba(14, 159, 110, 0.02)';
+        let pulseColorBorder = isDark ? 'rgba(0, 255, 159, 0.08)' : 'rgba(14, 159, 110, 0.05)';
+
+        if (activeAlert) {
+          const severity = getAlertSeverity(activeAlert.payload.alert_type, activeAlert.payload.confidence);
+          const themeConfig = SEVERITY_CONFIG[severity];
+          nodeColor = isDark ? themeConfig.color : themeConfig.lightColor;
+          pulseColorBg = isDark ? `${themeConfig.color}03` : `${themeConfig.lightColor}03`;
+          pulseColorBorder = isDark ? `${themeConfig.color}15` : `${themeConfig.lightColor}10`;
+        }
+
         if (on) {
           // Overlapping pulsing rings
           const pulseSize =
@@ -134,9 +149,9 @@ export const TacticalMap: React.FC<TacticalMapProps> = ({ large = false }) => {
             Math.sin(frameRef.current * 0.05 + id.charCodeAt(6) * 0.5) * 4 * scale;
           ctx.beginPath();
           ctx.arc(x, y, pulseSize, 0, Math.PI * 2);
-          ctx.fillStyle = isDark ? 'rgba(0, 255, 159, 0.02)' : 'rgba(14, 159, 110, 0.03)';
+          ctx.fillStyle = pulseColorBg;
           ctx.fill();
-          ctx.strokeStyle = isDark ? 'rgba(0, 255, 159, 0.1)' : 'rgba(14, 159, 110, 0.08)';
+          ctx.strokeStyle = pulseColorBorder;
           ctx.lineWidth = 1;
           ctx.stroke();
         }
@@ -145,13 +160,13 @@ export const TacticalMap: React.FC<TacticalMapProps> = ({ large = false }) => {
         ctx.beginPath();
         ctx.arc(x, y, r, 0, Math.PI * 2);
         ctx.fillStyle = on
-          ? isDark ? '#00ff9f' : '#0e9f6e'
+          ? nodeColor
           : isDark ? '#30363d' : '#d1d5db';
         ctx.fill();
 
         if (on) {
-          ctx.shadowColor = isDark ? '#00ff9f' : '#0e9f6e';
-          ctx.shadowBlur = 10 * scale;
+          ctx.shadowColor = nodeColor;
+          ctx.shadowBlur = 8 * scale;
           ctx.beginPath();
           ctx.arc(x, y, r, 0, Math.PI * 2);
           ctx.fill();
@@ -182,13 +197,13 @@ export const TacticalMap: React.FC<TacticalMapProps> = ({ large = false }) => {
       ctx.closePath();
       ctx.fillStyle = isDark ? '#00ff9f' : '#0e9f6e';
       ctx.fill();
-      ctx.strokeStyle = isDark ? 'rgba(0, 255, 159, 0.5)' : 'rgba(14, 159, 110, 0.5)';
+      ctx.strokeStyle = isDark ? 'rgba(0, 255, 159, 0.4)' : 'rgba(14, 159, 110, 0.4)';
       ctx.lineWidth = 1.5 * scale;
       ctx.stroke();
 
       // Hexagon Glow
       ctx.shadowColor = isDark ? '#00ff9f' : '#0e9f6e';
-      ctx.shadowBlur = 14 * scale;
+      ctx.shadowBlur = 10 * scale;
       ctx.fill();
       ctx.shadowBlur = 0;
 
@@ -208,7 +223,7 @@ export const TacticalMap: React.FC<TacticalMapProps> = ({ large = false }) => {
         cancelAnimationFrame(animationFrameRef.current);
       }
     };
-  }, [nodesReported, theme, large]);
+  }, [nodesReported, theme, large, alerts]);
 
   return (
     <div className="relative w-full h-full min-h-[220px]">
