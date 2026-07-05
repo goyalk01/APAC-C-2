@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SwarmGuard AI - Command Dashboard</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/static/css/style.css">
+    <!-- Include Chart.js per /slides skill recommendation for data viz -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+</head>
+<body>
+    <div class="status-bar">
+        <div class="status-indicator">
+            <div id="status-dot" class="dot offline"></div>
+            <span id="connection-status">Connecting...</span>
+        </div>
+        <div>SwarmGuard Decision Intelligence Layer (Offline Mode)</div>
+    </div>
+    
+    <div class="dashboard-container">
+        <!-- Left Panel: Incoming Mesh Feed -->
+        <div class="panel">
+            <div class="panel-header">Real-Time Threat Feed</div>
+            <div id="alert-feed" class="alert-feed">
+                <!-- Alerts injected here -->
+                <div style="color: var(--color-text-muted); text-align: center; margin-top: var(--space-4);">
+                    Awaiting mesh telemetry...
+                </div>
+            </div>
+        </div>
+        
+        <!-- Right Panel: Evidence and Analytics -->
+        <div class="panel">
+            <div class="panel-header">Swarm Analytics & Evidence</div>
+            
+            <div class="chart-container">
+                <canvas id="threatChart"></canvas>
+            </div>
+            
+            <div id="evidence-viewer" class="evidence-viewer">
+                <div style="padding: var(--space-3); text-align: center;">
+                    Select an alert to initiate Evidence Pull
+                </div>
+                <img id="evidence-image" class="evidence-image" alt="Visual Proof" />
+            </div>
+        </div>
+    </div>
+
+    <script src="/static/js/app.js"></script>
+</body>
+</html>

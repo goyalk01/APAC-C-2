@@ -1,0 +1,20 @@
+Category,Technology,Purpose
+Edge AI Runtime,TensorFlow Lite / ONNX Runtime,On-device threat inference from video/audio feeds
+Edge Model Framework,Vertex AI Edge (Model Registry + Optimization),"Train, optimize, and deploy lightweight models to edge nodes"
+Mesh Protocol (Simulated),WebSocket + Python asyncio,Simulated peer-to-peer mesh relay for demo purposes
+Mesh Protocol (Production),Bluetooth Mesh / LoRa / SDR,Real offline mesh networking (out of scope for prototype)
+Swarm Box Backend,Python FastAPI + WebSockets,"Ingest mesh JSON, generate TTS, cache data"
+TTS Engine,Browser Web Speech API + Gemini Flash,Convert threat JSON to natural language audio alerts
+Cloud Sync API,Python FastAPI on Cloud Run,REST API ingesting cached swarm data when connectivity restores
+Data Warehouse,Google BigQuery,Store all threat events for analytics and pattern detection
+Predictive ML,Vertex AI AutoML / Custom Training,Train predictive models on historical swarm data
+Conversational AI,Google Gemini + Agent Development Kit (ADK),Natural language decision support for commanders
+Knowledge Base,AlloyDB + Vertex AI RAG Engine,Store and retrieve emergency response protocols/SOPs
+Multimodal Analysis,Gemini Multimodal,Analyze cached 3-second visual proofs when synced to cloud
+Dashboard,Looker / Looker Studio,Commander dashboard with threat heatmaps and analytics
+Event Streaming,Google Cloud Pub/Sub,Async event routing between sync API and BigQuery
+Explainability Layer,Vertex AI Explainable AI,"Confidence scores, model versioning, audit trail"
+Frontend (Swarm Box UI),HTML/CSS/JavaScript (Vanilla),"Real-time alert feed, TTS controls, evidence viewer"
+Cryptography,Python cryptography library (Ed25519),Cryptographic signing of threat JSON payloads
+Version Control,Git + GitHub,Code repository and collaboration
+Demo Data,Python scripts with pre-programmed scenarios,Simulated disaster scenarios for demo
