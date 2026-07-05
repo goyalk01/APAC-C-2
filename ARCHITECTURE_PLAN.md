@@ -130,23 +130,6 @@ paths:
         '500':
           $ref: '#/components/responses/Error'
 
-  /alerts/{event_id}:
-    get:
-      summary: Get a single threat event by ID
-      parameters:
-        - name: event_id
-          in: path
-          required: true
-          schema: { type: string, format: uuid }
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema: { $ref: '#/components/schemas/ThreatEvent' }
-        '404':
-          $ref: '#/components/responses/Error'
-
   /healthz:
     get:
       summary: Liveness probe

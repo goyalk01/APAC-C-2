@@ -5,12 +5,19 @@ import { useAlerts } from '../context/AlertsContext';
 import { Header } from '../components/layout/Header';
 import { StatusBar } from '../components/layout/StatusBar';
 
+import { useEffect } from 'react';
+import { initSentry } from '../lib/sentry';
+
 interface LayoutContentProps {
   children: React.ReactNode;
 }
 
 export default function LayoutContent({ children }: LayoutContentProps) {
   const { ttsActive, ttsIndicatorText, flashActive } = useAlerts();
+
+  useEffect(() => {
+    initSentry();
+  }, []);
 
   return (
     <div className="flex flex-col min-h-screen relative">

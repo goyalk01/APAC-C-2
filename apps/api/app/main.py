@@ -57,6 +57,15 @@ async def lifespan(app: FastAPI):
 def create_app() -> FastAPI:
     settings = get_settings()
 
+    if settings.SENTRY_DSN:
+        import sentry_sdk
+        from sentry_sdk.integrations.fastapi import FastApiIntegration
+        sentry_sdk.init(
+            dsn=settings.SENTRY_DSN,
+            integrations=[FastApiIntegration()],
+            traces_sample_rate=1.0,
+        )
+
     app = FastAPI(title="SwarmGuard Swarm Box API", version="1.0", lifespan=lifespan)
 
     app.add_middleware(

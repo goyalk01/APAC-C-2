@@ -31,6 +31,9 @@ class Settings(BaseSettings):
     # --- Optional shared API-key auth (Decision 1 — off by default) ---
     SWARMBOX_API_KEY: str | None = None
 
+    # --- Sentry DSN ---
+    SENTRY_DSN: str | None = None
+
     # --- Logging ---
     LOG_LEVEL: str = "INFO"
 
