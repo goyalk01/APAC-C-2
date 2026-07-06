@@ -8,17 +8,17 @@ export interface SeverityTheme {
 
 export const SEVERITY_CONFIG: Record<SeverityLevel, SeverityTheme> = {
   CRITICAL: {
-    color: '#ff3860',
+    color: '#ef4444',
     lightColor: '#e02424',
     label: 'Critical',
   },
   WARNING: {
-    color: '#ffaa00',
+    color: '#f97316',
     lightColor: '#b45309',
     label: 'Warning',
   },
   ELEVATED: {
-    color: '#00b8ff',
+    color: '#3b82f6',
     lightColor: '#1c64f2',
     label: 'Elevated',
   }

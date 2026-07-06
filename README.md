@@ -43,6 +43,37 @@ Simulated IoT edge nodes run local threat inference, cryptographically sign payl
 
 ---
 
+## 🖼️ Interface Showcase
+
+Here is a preview of the SwarmGuard AI Command Center dashboard, featuring the premium warm SaaS theme (charcoal background `#111113`, warm amber accents, and clean severity-based overlays).
+
+### 1. Main Dashboard (Dark Mode)
+The main command view displays real-time threat metrics, the active threat feed, live telemetry logs, and the tactical radar-sweep map.
+![Dashboard Dark Mode](docs/images/dashboard_dark.png)
+
+### 2. Evidence Viewer & Threat Log
+Selecting a threat alert from the stream loads its cryptographic payload, validation status, and edge node signature metadata onto the decentralized Evidence Viewer canvas.
+![Evidence Viewer](docs/images/alert_details.png)
+
+### 3. Mesh Topology & Cloud Sync
+Dedicated tabs mapping peer-to-peer relay links and managing background cloud database synchronization.
+<table>
+  <tr>
+    <td width="50%"><b>Mesh Network Topology</b></td>
+    <td width="50%"><b>Cloud Sync Console</b></td>
+  </tr>
+  <tr>
+    <td><img src="docs/images/mesh_topology.png" alt="Mesh Topology" /></td>
+    <td><img src="docs/images/cloud_sync.png" alt="Cloud Sync" /></td>
+  </tr>
+</table>
+
+### 4. Main Dashboard (Light Mode)
+A clean, high-contrast light mode is supported and selectable at any time via the theme toggle in the top-right header.
+![Dashboard Light Mode](docs/images/dashboard_light.png)
+
+---
+
 ## 📁 Repository Structure
 
 ```

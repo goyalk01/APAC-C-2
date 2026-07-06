@@ -2,71 +2,71 @@
 
 /* ─── CUSTOM THEME VARIABLES ─── */
 :root, [data-theme="dark"] {
-  --bg: #0a0e14;
-  --bg-surface: #12171f;
-  --bg-elevated: #1a222f;
-  --bg-hover: #1f2937;
-  --bg-inset: #070a0e;
+  --bg: #111113;
+  --bg-surface: #1a1a1d;
+  --bg-elevated: #222225;
+  --bg-hover: #2a2a2e;
+  --bg-inset: #0d0d0f;
   
-  --border: #1f2937;
-  --border-dim: #161e29;
-  --border-glow: rgba(0, 255, 159, 0.15);
+  --border: #2a2a2e;
+  --border-dim: #1f1f22;
+  --border-glow: rgba(245, 158, 11, 0.12);
 
-  --text-primary: #e6edf3;
-  --text-secondary: #8b949e;
-  --text-muted: #57606a;
-  --text-dim: #30363d;
+  --text-primary: #f5f5f4;
+  --text-secondary: #a8a29e;
+  --text-muted: #78716c;
+  --text-dim: #44403c;
 
-  /* Cyberpunk Neon Accents */
-  --accent-primary: #00ff9f; /* neon green */
-  --accent-primary-bg: rgba(0, 255, 159, 0.08);
-  --accent-primary-border: rgba(0, 255, 159, 0.25);
-  --accent-primary-glow: rgba(0, 255, 159, 0.4);
+  /* Warm SaaS Accents */
+  --accent-primary: #f59e0b; /* warm amber */
+  --accent-primary-bg: rgba(245, 158, 11, 0.08);
+  --accent-primary-border: rgba(245, 158, 11, 0.20);
+  --accent-primary-glow: rgba(245, 158, 11, 0.35);
 
-  --accent-critical: #ff3860; /* neon pink/red */
-  --accent-critical-bg: rgba(255, 56, 96, 0.08);
-  --accent-critical-border: rgba(255, 56, 96, 0.25);
-  --accent-critical-glow: rgba(255, 56, 96, 0.5);
+  --accent-critical: #ef4444; /* clean red */
+  --accent-critical-bg: rgba(239, 68, 68, 0.08);
+  --accent-critical-border: rgba(239, 68, 68, 0.20);
+  --accent-critical-glow: rgba(239, 68, 68, 0.4);
 
-  --accent-warning: #ffaa00; /* neon amber */
-  --accent-warning-bg: rgba(255, 170, 0, 0.08);
-  --accent-warning-border: rgba(255, 170, 0, 0.25);
+  --accent-warning: #f97316; /* clean orange */
+  --accent-warning-bg: rgba(249, 115, 22, 0.08);
+  --accent-warning-border: rgba(249, 115, 22, 0.20);
 
-  --accent-info: #00b8ff; /* neon blue */
-  --accent-info-bg: rgba(0, 184, 255, 0.08);
-  --accent-info-border: rgba(0, 184, 255, 0.25);
+  --accent-info: #3b82f6; /* clean blue */
+  --accent-info-bg: rgba(59, 130, 246, 0.08);
+  --accent-info-border: rgba(59, 130, 246, 0.20);
 
   --shadow-sm: 0 1px 3px rgba(0,0,0,0.5);
   --shadow-md: 0 4px 12px rgba(0,0,0,0.6);
   --shadow-lg: 0 12px 36px rgba(0,0,0,0.8);
 
-  --header-bg: #0d121a;
-  --header-border: #1f2937;
-  --nav-active-bg: rgba(0, 255, 159, 0.1);
-  --nav-active-text: #00ff9f;
-  --nav-text: #8b949e;
-  --nav-active-border: #00ff9f;
+  --header-bg: #111113;
+  --header-border: #2a2a2e;
+  --nav-active-bg: rgba(245, 158, 11, 0.10);
+  --nav-active-text: #f59e0b;
+  --nav-text: #a8a29e;
+  --nav-active-border: #f59e0b;
 
-  --chart-grid: rgba(255, 255, 255, 0.05);
-  --chart-text: #8b949e;
+  --chart-grid: rgba(255, 255, 255, 0.04);
+  --chart-text: #a8a29e;
 
   /* Map Styling */
-  --map-link: rgba(0, 184, 255, 0.25);
-  --map-link-active: rgba(0, 255, 159, 0.35);
-  --map-node-active: #00ff9f;
-  --map-node-inactive: #30363d;
-  --map-label-color: #8b949e;
-  --map-glow: rgba(0, 255, 159, 0.5);
+  --map-link: rgba(59, 130, 246, 0.15);
+  --map-link-active: rgba(245, 158, 11, 0.25);
+  --map-node-active: #f59e0b;
+  --map-node-inactive: #44403c;
+  --map-label-color: #a8a29e;
+  --map-glow: rgba(245, 158, 11, 0.35);
 
   /* Logs Console */
-  --console-bg: #070a0e;
-  --console-border: #1f2937;
-  --console-text: #00ff9f;
-  --console-text-dim: #8b949e;
-  --console-text-error: #ff3860;
-  --console-text-warn: #ffaa00;
+  --console-bg: #0d0d0f;
+  --console-border: #2a2a2e;
+  --console-text: #f59e0b;
+  --console-text-dim: #a8a29e;
+  --console-text-error: #ef4444;
+  --console-text-warn: #f97316;
 
-  --flash-color: rgba(255, 56, 96, 0.06);
+  --flash-color: rgba(239, 68, 68, 0.06);
 }
 
 [data-theme="light"] {
@@ -193,7 +193,7 @@ body {
   background: linear-gradient(
     to bottom,
     rgba(255,255,255,0) 0%,
-    rgba(0, 255, 159, 0.01) 10%,
+    rgba(245, 158, 11, 0.01) 10%,
     rgba(255,255,255,0) 20%
   );
   pointer-events: none;

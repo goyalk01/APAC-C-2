@@ -40,12 +40,12 @@ export const AnalyticsCharts: React.FC<AnalyticsChartsProps> = ({ preview = fals
   const confs = Object.values(confidenceData).map((c) => Math.round(c * 100));
 
   const isDark = theme === 'dark';
-  const gridColor = isDark ? 'rgba(255, 255, 255, 0.05)' : 'rgba(0, 0, 0, 0.06)';
-  const textColor = isDark ? '#8b949e' : '#637381';
-  const surfaceColor = isDark ? '#12171f' : '#ffffff';
+  const gridColor = isDark ? 'rgba(255, 255, 255, 0.04)' : 'rgba(0, 0, 0, 0.06)';
+  const textColor = isDark ? '#a8a29e' : '#637381';
+  const surfaceColor = isDark ? '#1a1a1d' : '#ffffff';
 
   const chartColors = alertKeys.map((k) => {
-    const style = ALERT_CONFIG[k] || { color: '#ff3860', lightColor: '#e02424' };
+    const style = ALERT_CONFIG[k] || { color: '#ef4444', lightColor: '#e02424' };
     return isDark ? style.color : style.lightColor;
   });
 

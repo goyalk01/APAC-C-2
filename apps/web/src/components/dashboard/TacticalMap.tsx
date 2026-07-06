@@ -66,7 +66,7 @@ export const TacticalMap: React.FC<TacticalMapProps> = ({ large = false }) => {
       );
 
       // 1. Render glowing mesh link lines
-      ctx.strokeStyle = isDark ? 'rgba(0, 184, 255, 0.15)' : 'rgba(28, 100, 242, 0.08)';
+      ctx.strokeStyle = isDark ? 'rgba(59, 130, 246, 0.15)' : 'rgba(28, 100, 242, 0.08)';
       ctx.lineWidth = 1 * scale;
       ctx.setLineDash([4 * scale, 4 * scale]);
       for (let i = 0; i < activeNodes.length; i++) {
@@ -81,7 +81,7 @@ export const TacticalMap: React.FC<TacticalMapProps> = ({ large = false }) => {
       }
 
       // 2. Draw active relay lines to Swarm Box with flowing packet dots
-      ctx.strokeStyle = isDark ? 'rgba(0, 255, 159, 0.2)' : 'rgba(14, 159, 110, 0.15)';
+      ctx.strokeStyle = isDark ? 'rgba(245, 158, 11, 0.2)' : 'rgba(14, 159, 110, 0.15)';
       ctx.lineWidth = 1 * scale;
       ctx.setLineDash([]);
       activeNodes.forEach((id) => {
@@ -103,7 +103,7 @@ export const TacticalMap: React.FC<TacticalMapProps> = ({ large = false }) => {
 
         ctx.beginPath();
         ctx.arc(packetX, packetY, 1.2 * scale, 0, Math.PI * 2);
-        ctx.fillStyle = isDark ? '#00ff9f' : '#0e9f6e';
+        ctx.fillStyle = isDark ? '#f59e0b' : '#0e9f6e';
         ctx.fill();
       });
 
@@ -118,7 +118,7 @@ export const TacticalMap: React.FC<TacticalMapProps> = ({ large = false }) => {
         ctx.moveTo(sbx, sby);
         ctx.arc(sbx, sby, sweepR, angle, angle + 0.15);
         ctx.closePath();
-        ctx.fillStyle = 'rgba(0, 255, 159, 0.005)'; // Very faint sweep
+        ctx.fillStyle = 'rgba(245, 158, 11, 0.005)'; // Very faint sweep
         ctx.fill();
       }
 
@@ -130,9 +130,9 @@ export const TacticalMap: React.FC<TacticalMapProps> = ({ large = false }) => {
 
         // Find active threat alert on this node to color it dynamically
         const activeAlert = alerts.find((a) => a.payload.node_id === id);
-        let nodeColor = isDark ? '#00ff9f' : '#0e9f6e';
-        let pulseColorBg = isDark ? 'rgba(0, 255, 159, 0.01)' : 'rgba(14, 159, 110, 0.02)';
-        let pulseColorBorder = isDark ? 'rgba(0, 255, 159, 0.08)' : 'rgba(14, 159, 110, 0.05)';
+        let nodeColor = isDark ? '#f59e0b' : '#0e9f6e';
+        let pulseColorBg = isDark ? 'rgba(245, 158, 11, 0.01)' : 'rgba(14, 159, 110, 0.02)';
+        let pulseColorBorder = isDark ? 'rgba(245, 158, 11, 0.08)' : 'rgba(14, 159, 110, 0.05)';
 
         if (activeAlert) {
           const severity = getAlertSeverity(activeAlert.payload.alert_type, activeAlert.payload.confidence);
@@ -161,7 +161,7 @@ export const TacticalMap: React.FC<TacticalMapProps> = ({ large = false }) => {
         ctx.arc(x, y, r, 0, Math.PI * 2);
         ctx.fillStyle = on
           ? nodeColor
-          : isDark ? '#30363d' : '#d1d5db';
+          : isDark ? '#44403c' : '#d1d5db';
         ctx.fill();
 
         if (on) {
@@ -175,8 +175,8 @@ export const TacticalMap: React.FC<TacticalMapProps> = ({ large = false }) => {
 
         // Node Text
         ctx.fillStyle = on
-          ? isDark ? '#8b949e' : '#637381'
-          : isDark ? '#30363d' : '#9ca3af';
+          ? isDark ? '#a8a29e' : '#637381'
+          : isDark ? '#44403c' : '#9ca3af';
         ctx.font = `bold ${8 * scale}px var(--font-mono)`;
         ctx.textAlign = 'center';
         ctx.fillText(pos.label, x, y + 14 * scale);
@@ -195,19 +195,19 @@ export const TacticalMap: React.FC<TacticalMapProps> = ({ large = false }) => {
         else ctx.lineTo(hx, hy);
       }
       ctx.closePath();
-      ctx.fillStyle = isDark ? '#00ff9f' : '#0e9f6e';
+      ctx.fillStyle = isDark ? '#f59e0b' : '#0e9f6e';
       ctx.fill();
-      ctx.strokeStyle = isDark ? 'rgba(0, 255, 159, 0.4)' : 'rgba(14, 159, 110, 0.4)';
+      ctx.strokeStyle = isDark ? 'rgba(245, 158, 11, 0.4)' : 'rgba(14, 159, 110, 0.4)';
       ctx.lineWidth = 1.5 * scale;
       ctx.stroke();
 
       // Hexagon Glow
-      ctx.shadowColor = isDark ? '#00ff9f' : '#0e9f6e';
+      ctx.shadowColor = isDark ? '#f59e0b' : '#0e9f6e';
       ctx.shadowBlur = 10 * scale;
       ctx.fill();
       ctx.shadowBlur = 0;
 
-      ctx.fillStyle = isDark ? '#00ff9f' : '#0e9f6e';
+      ctx.fillStyle = isDark ? '#f59e0b' : '#0e9f6e';
       ctx.font = `bold ${7 * scale}px var(--font-mono)`;
       ctx.textAlign = 'center';
       ctx.fillText('SWARM BOX', sbx, sby + 20 * scale);

@@ -5,11 +5,11 @@ import { useAlerts } from '../../context/AlertsContext';
 import { getAlertSeverity, SEVERITY_CONFIG, getAlertLabel } from '../../lib/severity';
 
 export const ALERT_CONFIG: Record<string, { color: string; label: string; lightColor: string }> = {
-  BRIDGE_COLLAPSE:  { color: '#ff3860', label: 'Bridge Collapse', lightColor: '#e02424' },
-  FLOODING:         { color: '#00b8ff', label: 'Flooding', lightColor: '#1c64f2' },
-  STRUCTURAL_FIRE:  { color: '#ffaa00', label: 'Structural Fire', lightColor: '#b45309' },
+  BRIDGE_COLLAPSE:  { color: '#ef4444', label: 'Bridge Collapse', lightColor: '#e02424' },
+  FLOODING:         { color: '#3b82f6', label: 'Flooding', lightColor: '#1c64f2' },
+  STRUCTURAL_FIRE:  { color: '#f97316', label: 'Structural Fire', lightColor: '#b45309' },
   GAS_LEAK:         { color: '#a78bfa', label: 'Gas Leak', lightColor: '#7c3aed' },
-  CROWD_STAMPEDE:   { color: '#ff7700', label: 'Crowd Stampede', lightColor: '#ea580c' },
+  CROWD_STAMPEDE:   { color: '#f59e0b', label: 'Crowd Stampede', lightColor: '#ea580c' },
 };
 
 export const AlertFeed: React.FC = () => {

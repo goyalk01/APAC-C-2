@@ -30,11 +30,11 @@ export const EvidenceViewer: React.FC = () => {
     const p = selectedAlert.payload;
 
     // Background fill
-    ctx.fillStyle = isDark ? '#070a0e' : '#f9fafb';
+    ctx.fillStyle = isDark ? '#0d0d0f' : '#f9fafb';
     ctx.fillRect(0, 0, w, h);
 
     // Toned down grid lines background
-    ctx.strokeStyle = isDark ? 'rgba(0, 255, 159, 0.005)' : 'rgba(0,0,0,0.01)';
+    ctx.strokeStyle = isDark ? 'rgba(245, 158, 11, 0.005)' : 'rgba(0,0,0,0.01)';
     ctx.lineWidth = 0.5 * scale;
     for (let x = 0; x <= w; x += 24 * scale) {
       ctx.beginPath();
@@ -98,12 +98,12 @@ export const EvidenceViewer: React.FC = () => {
     ctx.fillText('SECURE IMAGE PROOF CACHE', w / 2, 38 * scale);
 
     // Large alert text label (font-sans style for labels)
-    ctx.fillStyle = isDark ? '#e6edf3' : '#111928';
+    ctx.fillStyle = isDark ? '#f5f5f4' : '#111928';
     ctx.font = `bold ${18 * scale}px var(--font-sans)`;
     ctx.fillText(getAlertLabel(p.alert_type).toUpperCase(), w / 2, 65 * scale);
 
     // Status / trust metadata subtext
-    ctx.fillStyle = isDark ? '#8b949e' : '#637381';
+    ctx.fillStyle = isDark ? '#a8a29e' : '#637381';
     ctx.font = `500 ${9 * scale}px var(--font-mono)`;
     ctx.fillText(`EDGE_NODE: ${p.node_id}   ·   TRUST: ${Math.round(p.confidence * 100)}%   ·   AUTHENTIC`, w / 2, 85 * scale);
 
@@ -111,8 +111,8 @@ export const EvidenceViewer: React.FC = () => {
     const boxW = w - 40 * scale;
     const boxH = 30 * scale;
     const boxY = 105 * scale;
-    ctx.fillStyle = isDark ? '#12171f' : '#ffffff';
-    ctx.strokeStyle = isDark ? '#1f2937' : '#e5e7eb';
+    ctx.fillStyle = isDark ? '#1a1a1d' : '#ffffff';
+    ctx.strokeStyle = isDark ? '#2a2a2e' : '#e5e7eb';
     ctx.lineWidth = 1 * scale;
     
     ctx.beginPath();
@@ -127,7 +127,7 @@ export const EvidenceViewer: React.FC = () => {
     ctx.fillText(hash, w / 2, boxY + 18 * scale);
 
     // Coordinates and time stamp footer
-    ctx.fillStyle = isDark ? '#57606a' : '#9ca3af';
+    ctx.fillStyle = isDark ? '#78716c' : '#9ca3af';
     ctx.font = `400 ${9 * scale}px var(--font-mono)`;
     ctx.fillText(
       `COORDS: ${p.gps.lat.toFixed(6)}N, ${p.gps.lng.toFixed(6)}W   ·   TIME: ${new Date(p.timestamp).toLocaleString()}`,

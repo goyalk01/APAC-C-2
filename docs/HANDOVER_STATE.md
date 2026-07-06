@@ -65,3 +65,17 @@ The team chose **PATH A** — making the offline demo bulletproof. All Phase 3-6
 3.  [x] Decoupled backend wraps JSON parsing in robust `try/except` block.
 4.  [x] Decoupled backend verifies Ed25519 signature against registry public keys.
 5.  [x] Simulation edge nodes use jitter.
+
+---
+
+## 7. UI Theme Overhaul & Polish (Warm SaaS Aesthetic)
+
+*   **Dark Theme Overhaul**: Replaced the previous neon-cyberpunk tactical style (blue-black background, bright neon-green highlights) with a premium warm SaaS theme:
+    *   **Palette**: Charcoal `#111113` background, stone-scale grays (`#f5f5f4`, `#a8a29e`, `#78716c`), and amber `#f59e0b` accents.
+    *   **Light Mode**: Maintained clean, original light theme styling.
+    *   **Unified Variables**: 45 CSS variables updated in `apps/web/src/app/globals.css`.
+    *   **Canvas Elements**: Coordinate overlays, tactical mesh lines, radar sweeps, and Evidence Viewer grids updated in `TacticalMap.tsx` and `EvidenceViewer.tsx` to match the new dark mode design system.
+    *   **Style Bug Fix**: Resolved the conflicting `borderColor` vs `borderLeftColor` console error in dashboard cards.
+    *   **Showcase Images**: Saved and linked E2E verification screenshots of all dashboard pages in `docs/images/` and integrated them into the root `README.md`.
+
+
