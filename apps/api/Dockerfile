@@ -10,9 +10,9 @@ COPY app ./app
 
 # node_keys.json / swarm_cache.db are runtime artifacts — generated or
 # mounted at deploy time, not baked into the image.
+COPY node_keys.json ./node_keys.json
+
 ENV API_HOST=0.0.0.0
-ENV API_PORT=8010
+ENV NODE_KEYS_PATH=/app/node_keys.json
 
-EXPOSE 8010
-
-CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8010"]
+CMD ["sh", "-c", "uvicorn app.main:app --host 0.0.0.0 --port ${PORT:-8010}"]

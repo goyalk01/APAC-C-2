@@ -8,7 +8,9 @@ class EdgeNode:
     def __init__(self, node_id: str, model_version: str = "swarmguard-edge-v1.2"):
         self.node_id = node_id
         self.model_version = model_version
-        self.signer = CryptoSigner()
+        import hashlib
+        seed = hashlib.sha256(node_id.encode('utf-8')).digest()
+        self.signer = CryptoSigner(private_key_bytes=seed)
 
     def get_public_key_b64(self) -> str:
         """Export this node's public key for the Swarm Box key registry."""

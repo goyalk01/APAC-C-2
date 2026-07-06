@@ -35,7 +35,7 @@ async def relay_handler(websocket):
 async def main():
     import os
     host = os.environ.get("RELAY_HOST", "0.0.0.0")
-    port = int(os.environ.get("RELAY_PORT", "8765"))
+    port = int(os.environ.get("PORT", os.environ.get("RELAY_PORT", "8765")))
     async with websockets.serve(relay_handler, host, port):
         print(f"Mesh relay active on ws://{host}:{port}")
         await asyncio.Future()  # run forever
