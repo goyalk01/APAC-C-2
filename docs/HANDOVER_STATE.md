@@ -79,3 +79,11 @@ The team chose **PATH A** — making the offline demo bulletproof. All Phase 3-6
     *   **Showcase Images**: Saved and linked E2E verification screenshots of all dashboard pages in `docs/images/` and integrated them into the root `README.md`.
 
 
+## 8. GCP Cloud Run E2E Deployment
+
+We successfully containerized and deployed the full decoupled stack (Mesh Relay, FastAPI Backend, Next.js Frontend) to Google Cloud Run (Always Free Tier).
+*   **Mesh Relay**: Deployed to `https://mesh-relay-185632210036.us-central1.run.app` with `min-instances: 0` and token-based connection authentication. Resolved `websockets` v14.0+ request path compatibility (`request.path` fallback).
+*   **FastAPI Backend API**: Deployed to `https://backend-api-185632210036.us-central1.run.app`. Connects to the cloud Mesh Relay, verifies deterministic Ed25519 signatures, and caches payloads. Restricted CORS specifically to the live frontend URL.
+*   **Next.js Frontend**: Deployed to `https://frontend-web-185632210036.us-central1.run.app`. Multi-stage standalone container with build-time injected API and WebSocket endpoints.
+*   **Automated Deployment**: Created automated deployment scripts `deploy_gcp.ps1` (PowerShell) and `deploy_gcp.sh` (Bash) to run remote Cloud Builds and deployments seamlessly.
+*   **E2E Verification**: Verified that simulated payloads sent locally from `trigger_simulation.py` route through the cloud relay and are verified/cached by the API, and rendered on the live frontend. Visual evidence proofs render flawlessly.
