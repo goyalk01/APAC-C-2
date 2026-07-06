@@ -9,7 +9,10 @@ async def relay_handler(websocket):
     import urllib.parse
     token = os.environ.get("RELAY_AUTH_TOKEN")
     if token:
-        parsed = urllib.parse.urlparse(websocket.path)
+        path = getattr(websocket, "path", None)
+        if path is None:
+            path = websocket.request.path
+        parsed = urllib.parse.urlparse(path)
         params = urllib.parse.parse_qs(parsed.query)
         path_token = params.get("token", [None])[0]
         if path_token != token:
