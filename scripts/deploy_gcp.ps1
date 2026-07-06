@@ -1,5 +1,7 @@
-# SwarmGuard AI — GCP Free Tier Deployer
-# Ensures all services are built and deployed via Cloud Run
+param(
+    [string]$ProjectId = $env:PROJECT_ID,
+    [string]$Region = $env:REGION
+)
 
 $ErrorActionPreference = "Stop"
 
@@ -15,15 +17,19 @@ if (!(Get-Command gcloud -ErrorAction SilentlyContinue)) {
 }
 
 # 2. Get Project Configuration
-$projectId = Read-Host "Enter your GCP Project ID"
-if ([string]::IsNullOrWhiteSpace($projectId)) {
+if ([string]::IsNullOrWhiteSpace($ProjectId)) {
+    $ProjectId = Read-Host 'Enter your GCP Project ID'
+}
+if ([string]::IsNullOrWhiteSpace($ProjectId)) {
     Write-Host "[ERROR] Project ID cannot be empty." -ForegroundColor Red
     Exit 1
 }
 
-$region = Read-Host "Enter GCP Region (default: us-central1)"
-if ([string]::IsNullOrWhiteSpace($region)) {
-    $region = "us-central1"
+if ([string]::IsNullOrWhiteSpace($Region)) {
+    $Region = Read-Host 'Enter GCP Region (default: us-central1)'
+}
+if ([string]::IsNullOrWhiteSpace($Region)) {
+    $Region = "us-central1"
 }
 
 Write-Host "`n[1/7] Setting up gcloud configuration..." -ForegroundColor Yellow
@@ -36,7 +42,7 @@ gcloud services enable run.googleapis.com artifactregistry.googleapis.com cloudb
 # 3. Create Artifact Registry Repository if it doesn't exist
 $repoName = "swarmguard-repo"
 Write-Host "`n[3/7] Setting up Artifact Registry repository ($repoName)..." -ForegroundColor Yellow
-$repoExists = gcloud artifacts repositories describe $repoName --location=$region --project=$projectId --format="value(name)" -ErrorAction SilentlyContinue
+$repoExists = gcloud artifacts repositories describe $repoName --location=$region --project=$projectId --format='value(name)' -ErrorAction SilentlyContinue
 if (!$repoExists) {
     gcloud artifacts repositories create $repoName `
         --repository-format=docker `
@@ -67,7 +73,7 @@ gcloud run deploy mesh-relay `
     --set-env-vars="RELAY_AUTH_TOKEN=$relayToken"
 
 # Get Mesh Relay URL
-$relayUrl = gcloud run services describe mesh-relay --format="value(status.url)"
+$relayUrl = gcloud run services describe mesh-relay --format='value(status.url)'
 # Convert https:// to wss://
 $relayWsUrl = $relayUrl -replace '^https://', 'wss://'
 Write-Host "Mesh Relay Deployed: $relayWsUrl" -ForegroundColor Green
@@ -87,7 +93,7 @@ gcloud run deploy backend-api `
     --max-instances=5 `
     --set-env-vars="MESH_RELAY_URL=$($relayWsUrl)?token=$relayToken,RELAY_AUTH_TOKEN=$relayToken,CORS_ALLOWED_ORIGINS=*"
 
-$apiUrl = gcloud run services describe backend-api --format="value(status.url)"
+$apiUrl = gcloud run services describe backend-api --format='value(status.url)'
 $apiWsUrl = $apiUrl -replace '^https://', 'wss://'
 Write-Host "Backend API Deployed: $apiUrl" -ForegroundColor Green
 
@@ -107,7 +113,7 @@ gcloud run deploy frontend-web `
     --min-instances=0 `
     --max-instances=5
 
-$frontendUrl = gcloud run services describe frontend-web --format="value(status.url)"
+$frontendUrl = gcloud run services describe frontend-web --format='value(status.url)'
 Write-Host "Frontend Deployed: $frontendUrl" -ForegroundColor Green
 
 # 7. Update Backend CORS Restriction
